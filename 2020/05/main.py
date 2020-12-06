@@ -2,7 +2,7 @@
 
 
 def parts_to_number(part, upper_char):
-    return int('0b' + ''.join([str(int(c == upper_char)) for c in part]), 2)
+    return int(''.join([str(int(c == upper_char)) for c in part]), 2)
 
 
 def read_seats(lines):
