@@ -3,38 +3,30 @@
 
 def is_direct_occupied(seats, row_index, seat_index, row_offset, seat_offset):
     new_row = row_index + row_offset
-    if new_row < 0 or len(seats) <= new_row:
-        return False
     new_seat = seat_index + seat_offset
-    if new_seat < 0 or len(seats[new_row]) <= new_seat:
+    if not 0 <= new_row < len(seats) or not 0 <= new_seat < len(seats[0]):
         return False
-    if seats[new_row][new_seat] == '#':
-        return True
-    return False
+    return seats[new_row][new_seat] == '#'
 
 
 def is_visible_occupied(seats, row_index, seat_index, row_offset, seat_offset):
-    new_row = row_index
-    new_seat = seat_index
-    while True:
+    new_row = row_index + row_offset
+    new_seat = seat_index + seat_offset
+    while 0 <= new_row < len(seats) and 0 <= new_seat < len(seats[0]):
+        if not seats[new_row][new_seat] == '.':
+            break
         new_row = new_row + row_offset
-        if new_row < 0 or len(seats) <= new_row:
-            return False
         new_seat = new_seat + seat_offset
-        if new_seat < 0 or len(seats[new_row]) <= new_seat:
-            return False
-        if seats[new_row][new_seat] == '.':
-            continue
-        if seats[new_row][new_seat] == '#':
-            return True
+    else:
         return False
+    return seats[new_row][new_seat] == '#'
 
 
 def count_neighbours(seats, occupied_func, row_index, seat_index):
     result = 0
     for row_offset in range(-1, 2):
         for seat_offset in range(-1, 2):
-            if not row_offset and not seat_offset:
+            if (row_offset == 0) and (seat_offset == 0):
                 continue
             if occupied_func(seats, row_index, seat_index, row_offset, seat_offset):
                 result += 1
