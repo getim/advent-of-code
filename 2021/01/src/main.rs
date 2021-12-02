@@ -6,7 +6,10 @@ use std::iter::Iterator;
 
 fn main() {
     let file = File::open("input").unwrap();
-    let heights: Vec<i32> = BufReader::new(file).lines().map(|l| l.unwrap().parse::<i32>().unwrap()).collect();
+    let heights: Vec<i32> = BufReader::new(file)
+        .lines()
+        .map(|l| l.unwrap().parse::<i32>().unwrap())
+        .collect();
 
     println!("Result 1: {}", count_increases(&heights, 1));
     println!("Result 2: {}", count_increases(&heights, 3));
